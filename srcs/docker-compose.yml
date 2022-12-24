@@ -1,0 +1,9 @@
+version: '3.7'
+
+services:
+    mariadb:
+        build: ./requirements/mariadb/
+        image: mariadb
+        container_name: mariadb
+        env_file:
+            - .env

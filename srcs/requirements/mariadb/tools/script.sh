@@ -2,14 +2,10 @@
 
 service mysql start
 
-mysql -e "CREATE DATABASE inception_db;"
+mysql -e "ALTER USER root@localhost IDENTIFIED BY '$MYSQL_ROOT_PASSWORD';"
 
-mysql -e "CREATE USER 'moumni'@'%' IDENTIFIED BY 'Moha';"
+if ! [ -f /var/lib/mysql/$MYSQL_DATABASE ]; then
+    mysql -u root -p$MYSQL_ROOT_PASSWORD -Bse "CREATE DATABASE $MYSQL_DATABASE;"
+fi
 
-mysql -e "GRANT ALL PRIVILEGES ON inception_db.* TO 'moumni'@'%';"
-
-mysql -e "FLUSH PRIVILEGES;"
-
-mysql -e "SHOW DATABASES;"
-
-mysql -e "select user from mysql.user;"
+mysql -u root -p$MYSQL_ROOT_PASSWORD -Bse "CREATE USER $MYSQL_USER@localhost IDENTIFIED BY '$MYSQL_PASSWORD';GRANT ALL PRIVILEGES ON $MYSQL_DATABASE.* TO '$MYSQL_USER'@localhost;FLUSH PRIVILEGES;SHOW DATABASES;SELECT User FROM mysql.user;"
