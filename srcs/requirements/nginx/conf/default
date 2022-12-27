@@ -4,19 +4,9 @@ server
     listen [::]:443 ssl;
 
     root /var/www/html;
-    index index.html index.nginx-debian.html; 
-    # server_name localhost;
+    index index.php index.html index.nginx-debian.html; 
 
     ssl_certificate     /etc/ssl/certs/nginx-selfsigned.crt;
     ssl_certificate_key /etc/ssl/private/nginx-selfsigned.key;
-    ssl_protocols       TLSv1.2;
-    
-    location / {
-        try_files $uri $uri/ =404;
-    }
-
-    # location ~ \.php$ {
-    #     fastcgi_pass unix:/run/php/php7.4-fpm.sock;
-    #     include snippets/fastcgi-php.conf;
-    # }
+    ssl_protocols       TLSv1.2;    
 }

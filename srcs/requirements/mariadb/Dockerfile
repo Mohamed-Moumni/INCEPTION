@@ -1,9 +1,7 @@
 FROM    debian:buster
 
-RUN apt update && apt -y install mariadb-server
+RUN     apt update && apt -y install mariadb-server
 
-COPY ./tools/init_database.sql /tmp/init_database.sql
+COPY    ./tools/script.sh /tmp/script.sh
 
-RUN service mysql start && mysql < /tmp/init_database.sql 
-
-CMD ["mysqld"]
+CMD     ["/tmp/script.sh"]

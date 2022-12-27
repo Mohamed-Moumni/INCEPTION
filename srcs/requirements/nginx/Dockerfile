@@ -4,4 +4,4 @@ RUN apt update && apt -y install nginx && apt install -y openssl && openssl req 
 
 COPY ./conf/default /etc/nginx/sites-enabled/default
 
-# CMD ["nginx", "-g", "daemon off;"]
+CMD ["nginx", "-g", "daemon off;"]
