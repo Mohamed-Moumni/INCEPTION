@@ -8,13 +8,18 @@ mv wp-cli.phar /usr/local/bin/wp
 
 cd /var/www/html/
 
-wp core download  --allow-root 
+if ! [ -f /var/www/html/wp-config.php ]
+then
+    wp core download  --allow-root
+fi
+
+sed -i 's/database_name_here/"$MYSQL_DATABASE"/g' /var/www/html/wp-config-sample.php
+sed -i 's/username_here/"$MYSQL_USER"/g' /var/www/html/wp-config-sample.php
+sed -i 's/password_here/"$MYSQL_PASSWORD"/g' /var/www/html/wp-config-sample.php
+sed -i 's/localhost/"$HOST"/g' /var/www/html/wp-config-sample.php
 
 cp /var/www/html/wp-config-sample.php /var/www/html/wp-config.php
 
-sed -i 's/database_name_here/DB/g' /var/www/html/wp-config.php
-sed -i 's/username_here/wordpress/g' /var/www/html/wp-config.php
-sed -i 's/password_here/Moha/g' /var/www/html/wp-config.php
-sed -i 's/localhost/mariadb/g' /var/www/html/wp-config.php
+wp core install --url=mmoumni.42.fr --title="My WordPress Site" --admin_user=moumni --admin_password=MohaMed --allow-root --admin_email=mohawatch101@gmail.com
 
-wp core install --url=mmoumni.42.fr --title="My WordPress Site" --admin_user=moumni --admin_password=MohaMed --allow-root
+exec "$@"

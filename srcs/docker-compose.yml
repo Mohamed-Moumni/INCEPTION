@@ -7,10 +7,34 @@ services:
         container_name: mariadb
         env_file:
             - .env
-        restart: always
+        restart: on-failure
     wordpress:
         build: ./requirements/wordpress/
         image: wordpress
         container_name: wordpress
         env_file:
             - .env
+        depends_on:
+            - mariadb
+            - nginx
+        restart: on-failure
+        volumes:
+            - data:/var/www/html/
+    nginx:
+        build: ./requirements/nginx/
+        image: nginx
+        container_name: nginx
+        env_file:
+            - .env
+        ports:
+            - 443:443
+        volumes:
+            - data:/var/www/html/
+volumes:
+    data:
+        driver: local
+        driver_opts:
+            device : /Users/mmoumni/Desktop/INCEPTION/srcs/data
+            type : none
+            o: bind
+        
