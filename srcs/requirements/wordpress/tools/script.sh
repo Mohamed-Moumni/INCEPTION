@@ -13,10 +13,10 @@ then
     wp core download  --allow-root
 fi
 
-sed -i 's/database_name_here/"$MYSQL_DATABASE"/g' /var/www/html/wp-config-sample.php
-sed -i 's/username_here/"$MYSQL_USER"/g' /var/www/html/wp-config-sample.php
-sed -i 's/password_here/"$MYSQL_PASSWORD"/g' /var/www/html/wp-config-sample.php
-sed -i 's/localhost/"$HOST"/g' /var/www/html/wp-config-sample.php
+sed -i 's/database_name_here/DB/g' /var/www/html/wp-config-sample.php
+sed -i 's/username_here/wordpress/g' /var/www/html/wp-config-sample.php
+sed -i 's/password_here/Moha/g' /var/www/html/wp-config-sample.php
+sed -i 's/localhost/mariadb/g' /var/www/html/wp-config-sample.php
 
 cp /var/www/html/wp-config-sample.php /var/www/html/wp-config.php
 
