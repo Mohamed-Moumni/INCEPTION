@@ -1,0 +1,42 @@
+version: '3.5'
+
+services:
+    mariadb:
+        build: ./requirements/mariadb
+        container_name: mariadb
+        image: mariadb
+        env_file:
+            - .env
+        restart: on-failure
+    nginx:
+        build: ./requirements/nginx
+        container_name: nginx
+        image: nginx
+        env_file:
+            - .env
+        ports:
+            - 443:443
+        restart: on-failure
+        depends_on:
+            - wordpress
+        volumes:
+            - data:/var/www/html/
+    wordpress:
+        build: ./requirements/wordpress
+        container_name: wordpress
+        image: wordpress
+        env_file:
+            - .env
+        restart: on-failure
+        depends_on:
+            - mariadb
+        volumes:
+            - data:/var/www/html/
+volumes:
+    data:
+        driver: local
+        driver_opts:
+            device : /Users/mmoumni/Desktop/INCEPTION/srcs/data
+            type : none
+            o: bind
+    
