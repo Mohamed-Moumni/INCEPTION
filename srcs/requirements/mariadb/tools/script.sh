@@ -15,4 +15,6 @@ sed -i 's/bind-address            = 127.0.0.1/bind-address = 0.0.0.0/g' /etc/mys
 
 service mysql stop
 
+echo "mariadb setup is ended\n"
+
 exec "$@"

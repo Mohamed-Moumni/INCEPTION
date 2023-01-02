@@ -30,6 +30,8 @@ sed -i 's/localhost/mariadb/g' /var/www/html/wp-config.php
 
 wp core install --url=mmoumni.42.fr --title="My Wordpress Site" --admin_user=moumni --admin_password=MohaMed --admin_email=mohawatch101@gmail.com --allow-root
 
+wp user create username mohamedmoulin7@gmail.com --role='author' --allow-root 
+
 echo "Wordpress Setup is finnished\n"
 
 exec "$@"

@@ -1,3 +1,5 @@
 # INCEPTION
-This Project is an introduction to Docker, that is commonly associated with the concept of containerization and 
-and the field of DevOps (a combination of developoment development and )
+This project is an introduction to docker and the concept of containerization, the project job is the set up three containers, one for the database that linked the one of WordPress, and linked with the one of nginx, The structure of the project like the illustration below.
+
+<img src="./images/proj_struc.png" align="center">
+
