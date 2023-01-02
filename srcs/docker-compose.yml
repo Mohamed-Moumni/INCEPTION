@@ -56,5 +56,5 @@ volumes:
             o: bind
 networks:
     nat:
-        driver:bridge
+        driver: bridge
     

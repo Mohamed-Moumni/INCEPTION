@@ -20,17 +20,17 @@ cp /var/www/html/wp-config-sample.php /var/www/html/wp-config.php
 
 sed -i '36 s/\/run\/php\/php7.3-fpm.sock/9000/' /etc/php/7.3/fpm/pool.d/www.conf
 
-sed -i 's/database_name_here/wordpress_db/g' /var/www/html/wp-config.php
+sed -i 's/database_name_here/'$MYSQL_DATABASE'/g' /var/www/html/wp-config.php
 
-sed -i 's/username_here/moumni/g' /var/www/html/wp-config.php
+sed -i 's/username_here/'$MYSQL_USER'/g' /var/www/html/wp-config.php
 
-sed -i 's/password_here/Moha/g' /var/www/html/wp-config.php
+sed -i 's/password_here/'$MYSQL_PASSWORD'/g' /var/www/html/wp-config.php
 
-sed -i 's/localhost/mariadb/g' /var/www/html/wp-config.php
+sed -i 's/localhost/'$HOST'/g' /var/www/html/wp-config.php
 
 wp core install --url=mmoumni.42.fr --title="My Wordpress Site" --admin_user=moumni --admin_password=MohaMed --admin_email=mohawatch101@gmail.com --allow-root
 
-wp user create username mohamedmoulin7@gmail.com --role='author' --allow-root 
+wp user create moumni2 mohamedmoulin7@gmail.com --role='author' --display_name="Rigor" --allow-root
 
 echo "Wordpress Setup is finnished\n"
 
