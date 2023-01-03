@@ -2,8 +2,7 @@ build:
 	docker-compose -f $(PWD)/srcs/docker-compose.yml build
 up:
 	docker-compose -f $(PWD)/srcs/docker-compose.yml up
-run:
-	up build
+run: build up  
 down:
 	docker-compose -f $(PWD)/srcs/docker-compose.yml down
 stop:

@@ -7,7 +7,7 @@ services:
         image: mariadb
         env_file:
             - .env
-        restart: on-failure
+        restart: always
         volumes:
             - data_db:/var/lib/mysql/
         networks:
@@ -34,7 +34,7 @@ services:
         image: wordpress
         env_file:
             - .env
-        restart: on-failure
+        restart: always
         depends_on:
             - mariadb
         volumes:

@@ -10,6 +10,8 @@ chown -R www-data:www-data /var/www/html/
 
 chmod -R 755 /var/www/html/
 
+if ! [ -f /var/www/html/wp-config.php ];
+then
 cd /var/www/html/
 
 wp core download --allow-root
@@ -31,6 +33,7 @@ sed -i 's/localhost/'$HOST'/g' /var/www/html/wp-config.php
 wp core install --url=mmoumni.42.fr --title="My Wordpress Site" --admin_user=moumni --admin_password=MohaMed --admin_email=mohawatch101@gmail.com --allow-root
 
 wp user create moumni2 mohamedmoulin7@gmail.com --role='author' --display_name="Rigor" --allow-root
+fi
 
 echo "Wordpress Setup is finnished\n"
 
