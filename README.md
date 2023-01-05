@@ -74,10 +74,125 @@ Each of the files that make up a docker image is known as a layer. these layers 
 
 ### How to create a Docker image ?
 
+You can create a Docker image by creating a dockerfile for the needed image and add the commands you need to assemble The image.
+The following commands are the most used for creating dockerfile:
 
+ ---------------------------------
+| Command         | Purpose     |
+|-----------------|-------------|
+| FROM            | To specify the base image.|
+| WORKDIR         | To set the working directory for any commands that follow in the Dockerfile.|
+| RUN             | To install any applications and packages required for your container.|
+| COPY            | To copy over files or directories from a specific location.|
+| ADD             | As COPY, but also able to handle remote URLs and unpack compressed files.|
+| ENTRYPOINT      | Command that will always be executed when the container starts. If not specified, the default is /bin/sh -c.|
+| CMD             | Arguments passed to the entrypoint. If ENTRYPOINT is not set (defaults to /bin/sh -c), the CMD will be the commands the container executes.|
+|EXPOSE           | To define which port through which to access your container application.|
+|LABEL            | To add metadata to the image.|
+ --------------------------------------------------
+<br></br>
+For example in This project the Dockerfile of NGINX image look like:
+<br></br>
+``` Dockerfile
+FROM    debian:buster
 
+RUN     apt update && apt -y install nginx && apt install -y openssl && openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout /etc/ssl/private/nginx-selfsigned.key -out /etc/ssl/certs/nginx-selfsigned.crt -subj="/CN=mmoumni/O=moumni.1337.ma/C=MA/L=KHOURIBGA"
+
+COPY    ./conf/default /etc/nginx/sites-enabled/default
+
+CMD     ["nginx", "-g", "daemon off;"]
+```
+
+## Docker Compose
+
+The ability to run one container could be great if you have a self-contained image that has everything you need for your single use case, where things get interesting is when you are looking to build multiple applications between different container images. For example, if I had a website front end but required a backend database I could put everything in one container but better and more efficient would be to have its container for the database
+
+This where Docker compose comes in which is a tool that allows you to run more complex apps over multiple containers. 
+Good example is the given in the project we have 3 services each one inside a container.
+
+### Docker-Compose.yml (YAML)
+
+The next thing to talk about is the docker-compose.yml which you can find in the container folder of the repository. But more importantly, we need to discuss YAML, in general, a little.
+YAML could almost have its session as you are going to find it in so many different places. But for the most part
+"YAML is a human-friendly data serialization language for all programming languages."
+
+This is a configuration file of what we want to do when it comes to multiple containers being deployed on our single system
+
+You can See the Docker-compose.yml that I used in the project:
+``` Docker-compose.yml
+version: '3.5'
+
+services:
+    mariadb:
+        build: ./requirements/mariadb
+        container_name: mariadb
+        image: mariadb
+        env_file:
+            - .env
+        restart: always
+        volumes:
+            - data_db:/var/lib/mysql/
+        networks:
+            - nat
+    nginx:
+        build: ./requirements/nginx
+        container_name: nginx
+        image: nginx
+        env_file:
+            - .env
+        ports:
+            - 443:443
+        restart: on-failure
+        depends_on:
+            - wordpress
+        volumes:
+            - data:/var/www/html/
+        networks:
+            - nat
+    wordpress:
+        build: ./requirements/wordpress
+        container_name: wordpress
+        image: wordpress
+        env_file:
+            - .env
+        restart: always
+        depends_on:
+            - mariadb
+        volumes:
+            - data:/var/www/html/
+        networks:
+            - nat
+volumes:
+    data:
+        driver: local
+        driver_opts:
+            device : /Users/mmoumni/Desktop/INCEPTION/srcs/data
+            type : none
+            o: bind
+    data_db:
+        driver: local
+        driver_opts:
+            device: /Users/mmoumni/Desktop/INCEPTION/srcs/data_db
+            type: none
+            o: bind
+networks:
+    nat:
+        driver: bridge
+```
 
 ## What is Volumes?
+
+A Docker volume is a unit of storage—you can think of it as a USB stick for containers. Volumes exist independently of containers and have their own life cycles, but they can be attached to containers. Volumes are how you manage storage for stateful applica- tions when the data needs to be persistent. You create a volume and attach it to your application container; it appears as a directory in the container’s filesystem. The con- tainer writes data to the directory, which is actually stored in the volume. When you update your app with a new version, you attach the same volume to the new container, and all the original data is available.
+There are two ways to use volumes with containers: you can manually create vol- umes and attach them to a container, or you can use a VOLUME instruction in the Dockerfile. That builds an image that will create a volume when you start a container
+
+<img src="./images/volume.png">
+
+- Writeable layer : Perfect for short-term storage, like caching data to disk to save on network calls or computations. These are unique to  each container but are gone forever when the container is removed.
+- Local bind mounts : Used to share data between the host and the container. Developers can use bind mounts to load the source code on their computer into the container, so when they make local edits to HTML or JavaScript files, the changes are immediately in the container without having to build a new image.
+- Distributed bind mounts : Used to share data between network storage and con- tainers. These are useful, but you need to be aware that network storage will not have the same performance as local disk and may not offer full filesystem fea- tures. They can be used as read-only sources for configuration data or a shared cache, or as read-write to store data that can be used by any container on any machine on the same network.
+- Volume mounts : Used to share data between the container and a storage object that is managed by Docker. These are useful for persistent storage, where the application writes data to the volume. When you upgrade your app with a new container, it will retain the data written to the volume by the previous version.
+- Image layers : These present the initial filesystem for the container. Layers are stacked, with the latest layer overriding earlier layers, so a file written in a layer at the beginning of the Dockerfile can be overridden by a subsequent layer that writes to the same path. Layers are read-only, and they can be shared between containers.
+
 
 ## How docker Network works?
 

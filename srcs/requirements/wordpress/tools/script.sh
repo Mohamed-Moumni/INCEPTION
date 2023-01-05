@@ -10,20 +10,29 @@ chown -R www-data:www-data /var/www/html/ #
 
 chmod -R 755 /var/www/html/ #changing the owner of /var/www/html/ to 755 and all subdirectories
 
-if ! [ -f /var/www/html/ ];
+if ! [ -f /var/www/html/wp-config.php ];
 then
     cd /var/www/html/
+
     wp core download --allow-root
+    
     touch wp-config.php
+    
     cp /var/www/html/wp-config-sample.php /var/www/html/wp-config.php
+    
     sed -i '36 s/\/run\/php\/php7.3-fpm.sock/9000/' /etc/php/7.3/fpm/pool.d/www.conf
+    
     sed -i 's/database_name_here/'$MYSQL_DATABASE'/g' /var/www/html/wp-config.php
+    
     sed -i 's/username_here/'$MYSQL_USER'/g' /var/www/html/wp-config.php
+    
     sed -i 's/password_here/'$MYSQL_PASSWORD'/g' /var/www/html/wp-config.php
+    
     sed -i 's/localhost/'$HOST'/g' /var/www/html/wp-config.php
-    # wp config create --dbname=$MYSQL_DATABASE --dbuser=$MYSQL_USER --dbpass=$MYSQL_PASSWORD --dbhost=$HOST --allow-root
+        
     wp core install --url=$URL --title="My Wordpress Site" --admin_user=$ADMIN_USER --admin_password=$ADMIN_PASSWORD --admin_email=$EMAIL --allow-root
-    wp user create $USER $EMAIL --role='author' --display_name=$DISPLAY_NAME --allow-root
+    
+    wp user create $USER $USER_EMAIL --role='author' --display_name=$DISPLAY_NAME --allow-root
 fi
 
 exec "$@"
