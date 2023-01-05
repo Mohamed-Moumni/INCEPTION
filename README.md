@@ -37,6 +37,7 @@ Without docker, this means that each environment that the application runs on (l
 As a result, docker should avoid the typical "works on my machine" cases. In the development process, for example, developers and testers will have the identical environment where the application runs, since this environment is packaged in docker containers, which just like a file, can be transferred around as an artifact.
 
 ## What is Docker?
+
 Docker is an open source project for building, shipping, and running programs. It is a command- line program, a background process, and a set of remote services that take a logistical approach to solving common software problems and simplifying your experience installing, running, publishing, and removing software. It accomplishes this by using an operating system technology called containers
 
 ## What is Container?
@@ -57,8 +58,32 @@ I mentioned images in the last section when it comes to how and why containers a
 
 A container image is a lightweight, standalone, executable package of software that includes everything needed to run an application: code, runtime, system tools, system libraries and settings. Container images become containers at runtime
 
+### The anatomy of a Docker image
+
+A Docker image is a read-only template that contains a set of instructions for creating a container that can run on the Docker platform. It provides a convenient way to package up applications and preconfigured server environments, which you can use for your private use or share publicly with other Docker users. Docker images are also the starting point for anyone using Docker for the first time.
+
+To create an image you should write your instructions for the image in a dockerfile. so What is a dockerfile ?
+
+### What is a Dockerfile ?
+
+A dockerfile is a text file that contains commands you would normally execute manually to build a docker image. Docker can build images automatically by reading the instructions we have in our dockerfile.
+
+Each of the files that make up a docker image is known as a layer. these layers form a series of images, built on top of each other in stages. Each layer is dependent on the layer immediately below it. The order of your layers is key to the efficiency of the lifecycle management of your docker images
+
+<img src="./images/docker_image.png">
+
+### How to create a Docker image ?
+
+
+
+
 ## What is Volumes?
 
 ## How docker Network works?
 
 ## What is DockerHub?
+
+## BONUS PART
+
+### Redis CACHING
+

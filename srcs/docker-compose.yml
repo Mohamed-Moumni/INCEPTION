@@ -12,7 +12,6 @@ services:
             - data_db:/var/lib/mysql/
         networks:
             - nat
-        
     nginx:
         build: ./requirements/nginx
         container_name: nginx
