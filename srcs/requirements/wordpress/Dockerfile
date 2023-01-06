@@ -14,3 +14,5 @@ RUN chmod +x /tmp/script.sh
 ENTRYPOINT [ "/tmp/script.sh" ]
 
 CMD [ "php-fpm7.3", "-F" ]
+
+EXPOSE 9000

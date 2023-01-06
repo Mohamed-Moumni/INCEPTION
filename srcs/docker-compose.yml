@@ -10,6 +10,8 @@ services:
         restart: always
         volumes:
             - data_db:/var/lib/mysql/
+        ports:
+            - 3306:3306
         networks:
             - nat
     nginx:
@@ -33,11 +35,22 @@ services:
         image: wordpress
         env_file:
             - .env
+        ports:
+            - 9000:9000
         restart: always
         depends_on:
             - mariadb
         volumes:
             - data:/var/www/html/
+        networks:
+            - nat
+    adminer:
+        build: ./requirements/bonus/adminer
+        container_name: adminer
+        image: adminer
+        restart: always
+        ports:
+            - 8080:8080
         networks:
             - nat
 volumes:
