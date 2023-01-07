@@ -11,12 +11,8 @@ down:
 stop:
 	docker-compose -f $(PWD)/srcs/docker-compose.yml stop
 
-restart: clean
-	$(MAKE) down
-	# docker rmi $(docker image ls -qa)
+restart:
 	docker system prune --all
-	$(MAKE) build
-	$(MAKE) up
 clean:
 	rm -rf /Users/mmoumni/Desktop/INCEPTION/srcs/data/*
 	rm -rf /Users/mmoumni/Desktop/INCEPTION/srcs/data_db/*

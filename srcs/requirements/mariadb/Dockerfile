@@ -8,4 +8,4 @@ RUN chmod +x /tmp/script.sh
 
 ENTRYPOINT [ "/tmp/script.sh" ]
 
-CMD [ "mysqld_safe" ]
+CMD [ "mysqld" ]
