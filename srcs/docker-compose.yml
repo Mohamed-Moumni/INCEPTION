@@ -50,7 +50,7 @@ services:
         image: adminer:inception
         restart: always
         ports:
-            - 8080:8080
+            - 8081:8081
         networks:
             - nat
     redis:
@@ -60,6 +60,15 @@ services:
         restart: on-failure
         ports:
             - '6379:6379'
+        networks:
+            - nat
+    cadvisor:
+        build: ./requirements/bonus/cadvisor
+        container_name: cadvisor
+        image: cadvisor
+        restart: on-failure
+        ports:
+            - '8080:8080'
         networks:
             - nat
 volumes:
