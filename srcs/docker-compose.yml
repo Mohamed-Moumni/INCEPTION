@@ -11,7 +11,7 @@ services:
         volumes:
             - data_db:/var/lib/mysql/
         ports:
-            - 3306:3306
+            - '3306:3306'
         networks:
             - nat
     nginx:
@@ -21,7 +21,7 @@ services:
         env_file:
             - .env
         ports:
-            - 443:443
+            - '443:443'
         restart: on-failure
         depends_on:
             - wordpress
@@ -39,7 +39,7 @@ services:
         depends_on:
             - mariadb
         ports:
-            - 9000:9000
+            - '9000:9000'
         volumes:
             - data:/var/www/html/
         networks:
@@ -50,7 +50,7 @@ services:
         image: adminer:inception
         restart: always
         ports:
-            - 8081:8081
+            - '8081:8081'
         networks:
             - nat
     redis:
@@ -69,6 +69,15 @@ services:
         restart: on-failure
         ports:
             - '8080:8080'
+        networks:
+            - nat
+    static_stite:
+        build: ./requirements/bonus/static_site
+        container_name: static_site
+        image: static_site
+        restart: on-failure
+        ports:
+            - '80:80'
         networks:
             - nat
 volumes:
