@@ -17,10 +17,12 @@ sed -i 's/database_name_here/'$MYSQL_DATABASE'/g' /var/www/html/wp-config.php
 sed -i 's/username_here/'$MYSQL_USER'/g' /var/www/html/wp-config.php
 sed -i 's/password_here/'$MYSQL_PASSWORD'/g' /var/www/html/wp-config.php
 sed -i 's/localhost/'$HOST'/g' /var/www/html/wp-config.php
+wp config set WP_REDIS_HOST 'redis' --allow-root
+wp config set WP_REDIS_PORT '6379' --allow-root
+wp config set WP_CACHE 'true' --allow-root 
 wp core install --url=$URL --title="My Wordpress Site" --admin_user=$ADMIN_USER --admin_password=$ADMIN_PASSWORD --admin_email=$ADMIN_EMAIL --allow-root
-wp user create $USER $USER_PASSWORD $USER_EMAIL --role='author' --display_name=$DISPLAY_NAME --allow-root    
-wp plugin install redis-cache --activate --allow-root #install the plugin of redis-cache
-echo -e "define('WP_REDIS_HOST', 'redis');\ndefine('WP_REDIS_PORT', '6379');" >> wp-config.php
-echo -e "define( 'WP_CACHE_KEY_SALT', 'localhost' );\ndefine( 'WP_CACHE', true );" >> wp-config.php
-
+wp user create $USER $USER_PASSWORD $USER_EMAIL --role='author' --display_name=$DISPLAY_NAME --allow-root
+wp plugin install redis-cache --allow-root #install the plugin of redis-cache
+wp plugin activate redis-cache --allow-root # activate the plugin of redis-cache
+wp redis enable --allow-root # enable the plugin of redis-cache
 exec "$@"
