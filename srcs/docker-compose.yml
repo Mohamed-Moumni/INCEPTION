@@ -65,7 +65,7 @@ services:
     cadvisor:
         build: ./requirements/bonus/cadvisor
         container_name: cadvisor
-        image: cadvisor
+        image: cadvisor:inception
         restart: on-failure
         ports:
             - '8080:8080'
@@ -74,10 +74,24 @@ services:
     static_stite:
         build: ./requirements/bonus/static_site
         container_name: static_site
-        image: static_site
+        image: static_site:inception
         restart: on-failure
         ports:
             - '80:80'
+        networks:
+            - nat
+    ftp:
+        build: ./requirements/bonus/FTP
+        container_name: ftp
+        image: ftp:inception
+        restart: on-failure
+        ports:
+            - '21:21'
+            - '30000-30009:30000-30009'
+        env_file:
+            - .env
+        volumes:
+            - data:/var/www/html/
         networks:
             - nat
 volumes:
