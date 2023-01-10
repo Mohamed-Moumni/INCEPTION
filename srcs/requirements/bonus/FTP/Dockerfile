@@ -1,4 +1,4 @@
- #base image
+#base image
 FROM debian:buster
 
 # install vsftpd (Very Secure FTP Daemon)
