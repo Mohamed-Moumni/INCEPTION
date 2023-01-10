@@ -11,7 +11,7 @@ COPY ./tools/script.sh /tmp/script.sh
 RUN chmod +x ./tmp/script.sh 
 
 # run the script inside the container
-ENTRYPOINT [ "/tmp/script.sh" ] 
+ENTRYPOINT [ "/tmp/script.sh" ]
 
 # run the vsftpd
-CMD ["vsftpd"] 
+CMD ["usr/sbin/vsftpd"]

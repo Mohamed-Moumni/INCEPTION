@@ -88,10 +88,13 @@ services:
         ports:
             - '21:21'
             - '30000-30009:30000-30009'
+            - '20:20'
         env_file:
             - .env
         volumes:
             - data:/var/www/html/
+        depends_on:
+            - wordpress
         networks:
             - nat
 volumes:
