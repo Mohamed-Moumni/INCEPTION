@@ -43,6 +43,8 @@ sed -i 's/password_here/'$MYSQL_PASSWORD'/g' /var/www/html/wp-config.php
 # set The Hostname of the That base
 sed -i 's/localhost/'$HOST'/g' /var/www/html/wp-config.php
 
+wp config set FORCE_SSL_ADMIN 'false' --allow-root
+
 # set Hostname of redis container
 wp config set WP_REDIS_HOST 'redis' --allow-root
 
@@ -54,7 +56,7 @@ wp config set WP_REDIS_PORT '6379' --allow-root
 wp config set WP_CACHE 'true' --allow-root
 
 # instal the wordpress
-wp core install --url=$URL --title="My Wordpress Site" --admin_user=$ADMIN_USER --admin_password=$ADMIN_PASSWORD --admin_email=$ADMIN_EMAIL --allow-root
+wp core install --url=$DOMAIN_NAME --title="My Wordpress Site" --admin_user=$ADMIN_USER --admin_password=$ADMIN_PASSWORD --admin_email=$ADMIN_EMAIL --allow-root
 
 # create second user in wordpress
 wp user create $USER $USER_EMAIL --user_pass=$USER_PASSWORD --role='author' --allow-root

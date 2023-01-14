@@ -23,8 +23,6 @@ services:
         ports:
             - '443:443'
         restart: on-failure
-        depends_on:
-            - wordpress
         volumes:
             - data_wp:/var/www/html/
         networks:
@@ -37,6 +35,7 @@ services:
             - .env
         restart: always
         depends_on:
+            - nginx
             - mariadb
         ports:
             - '9000:9000'
@@ -106,16 +105,15 @@ volumes:
     data_wp:
         driver: local
         driver_opts:
-            device : /home/login/data/data_wp
+            device : /Users/mmoumni/Desktop/INCEPTION/data_wp
             type : none
             o: bind
     data_db:
         driver: local
         driver_opts:
-            device: /home/login/data/data_db
+            device: /Users/mmoumni/Desktop/INCEPTION/data_db
             type: none
             o: bind
 networks:
     nat:
         driver: bridge
-    
