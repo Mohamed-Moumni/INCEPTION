@@ -8,11 +8,12 @@ adduser --gecos "" $FTP_USER
 echo "$FTP_USER:$FTP_PASSWORD_USER" | chpasswd
 # Create the ftp folder
 mkdir -p /home/$FTP_USER/ftp
+# Create volume folder for ftp
+mkdir -p /home/moumniVolum/ftp
 # set its ownership
 chown -R $FTP_USER:$FTP_USER /home/$FTP_USER/ftp
 # Remove write permissions
 chmod a-w /home/$FTP_USER/ftp 
-
 # disables anonymous login to the FTP server
 echo "anonymous_enable=NO" >> /etc/vsftpd.conf;
 # enables write permissions for the FTP users.
@@ -26,7 +27,7 @@ echo "user_sub_token=$FTP_USER" >> /etc/vsftpd.conf
 # enables local user login
 echo "local_enable=YES" >> /etc/vsftpd.conf
 # line sets the FTP root directory for the local user to /home/$FTP_USER/ftp
-echo "local_root=/home/$FTP_USER/ftp" >> /etc/vsftpd.conf
+echo "local_root=/home/moumniVolum/ftp" >> /etc/vsftpd.conf
 # sets the minimum port for passive mode data connections
 echo "pasv_min_port=30000" >> /etc/vsftpd.conf
 # sets the maximum port for passive mode data connections
@@ -39,7 +40,6 @@ echo "userlist_file=/etc/vsftpd.userlist" >> /etc/vsftpd.conf
 echo "userlist_deny=NO" >> /etc/vsftpd.conf
 # appends the value of the FTP_USER variable to the userlist file.
 echo "$FTP_USER" | tee -a /etc/vsftpd.userlist
-
 # stop the service of vsftpd
 service vsftpd stop
 

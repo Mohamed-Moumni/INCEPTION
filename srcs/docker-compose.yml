@@ -26,7 +26,7 @@ services:
         depends_on:
             - wordpress
         volumes:
-            - data:/var/www/html/
+            - data_wp:/var/www/html/
         networks:
             - nat
     wordpress:
@@ -41,7 +41,7 @@ services:
         ports:
             - '9000:9000'
         volumes:
-            - data:/var/www/html/
+            - data_wp:/var/www/html/
         networks:
             - nat
     adminer:
@@ -69,6 +69,11 @@ services:
         restart: on-failure
         ports:
             - '8080:8080'
+        volumes:
+            - "/:/rootfs:ro"
+            - "/var/run:/var/run:rw"
+            - "/sys:/sys:ro"
+            - "/var/lib/docker/:/var/lib/docker:ro"
         networks:
             - nat
     static_stite:
@@ -92,13 +97,13 @@ services:
         env_file:
             - .env
         volumes:
-            - data:/var/www/html/
+            - data_wp:/home/moumniVolum/ftp
         depends_on:
             - wordpress
         networks:
             - nat
 volumes:
-    data:
+    data_wp:
         driver: local
         driver_opts:
             device : /Users/mmoumni/Desktop/INCEPTION/srcs/data
