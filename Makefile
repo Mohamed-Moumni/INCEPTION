@@ -1,6 +1,10 @@
 build:
+	mkdir -p /home/mmoumni/data/data_wp
+	mkdir -p /home/mmoumni/data/data_db
 	docker-compose -f  $(PWD)/srcs/docker-compose.yml build
 up:
+	mkdir -p /home/mmoumni/data/data_wp
+	mkdir -p /home/mmoumni/data/data_db
 	docker-compose -f  $(PWD)/srcs/docker-compose.yml up -d
 run: build up
 down:
@@ -9,5 +13,5 @@ down:
 stop:
 	docker-compose -f $(PWD)/srcs/docker-compose.yml stop
 clean:
-	rm -rf /Users/mmoumni/Desktop/INCEPTION/srcs/data/*
-	rm -rf /Users/mmoumni/Desktop/INCEPTION/srcs/data_db/*
+	rm -rf /home/mmoumni/data/data_wp
+	rm -rf /home/mmoumni/data/data_db

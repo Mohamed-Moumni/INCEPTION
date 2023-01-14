@@ -106,13 +106,13 @@ volumes:
     data_wp:
         driver: local
         driver_opts:
-            device : /Users/mmoumni/Desktop/INCEPTION/srcs/data
+            device : /home/login/data/data_wp
             type : none
             o: bind
     data_db:
         driver: local
         driver_opts:
-            device: /Users/mmoumni/Desktop/INCEPTION/srcs/data_db
+            device: /home/login/data/data_db
             type: none
             o: bind
 networks:
