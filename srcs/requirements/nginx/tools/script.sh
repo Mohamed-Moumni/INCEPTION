@@ -5,7 +5,7 @@ echo "server
     listen 443 ssl;
     root /var/www/html;
     index index.php;
-    server_name mmoumni.1337.ma;" > /etc/nginx/sites-enabled/default
+    server_name $DOMAIN_NAME;" > /etc/nginx/sites-enabled/default
 
 echo "ssl_certificate     $CERTS_;
     ssl_certificate_key $KEYS_;
