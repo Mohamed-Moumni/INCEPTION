@@ -10,8 +10,8 @@ services:
         restart: always
         volumes:
             - data_db:/var/lib/mysql/
-        ports:
-            - '3306:3306'
+        expose:
+            - '3306'
         networks:
             - nat
     nginx:
@@ -37,8 +37,8 @@ services:
         depends_on:
             - nginx
             - mariadb
-        ports:
-            - '9000:9000'
+        expose:
+            - '9000'
         volumes:
             - data_wp:/var/www/html/
         networks:
