@@ -44,7 +44,7 @@ services:
         networks:
             - nat
     adminer:
-        build: ./requirements/bonus/adminer
+        build: ./requirements/bonus/Adminer
         container_name: adminer
         image: adminer:inception
         restart: always
